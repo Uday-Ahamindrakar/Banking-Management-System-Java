@@ -46,7 +46,7 @@ public class LogIn extends JFrame {
 					LogIn frame = new LogIn();
 					ImageIcon ic = new ImageIcon(getClass().getClassLoader().getResource("bank_icon_129525.png"));
 
-//					ImageIcon icon = new ImageIcon("C:\\Users\\udaya\\eclipse-workspace\\XYZ Bank\\Images\\bank_icon_129525.png");
+//					ImageIcon icon = new ImageIcon("C:\\Users\\udaya\\eclipse-workspace\\STAR BANK\\Images\\bank_icon_129525.png");
 					frame.setIconImage(ic.getImage());
 					frame.setVisible(true);
 					frame.setResizable(false);
@@ -59,7 +59,7 @@ public class LogIn extends JFrame {
 
 	
 	public LogIn() {
-		super("XYZ Bank");
+		super("STAR BANK");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Uday\\eclipse-workspace\\Images\\bank_icon_129525.png"));
 		
 
@@ -135,6 +135,7 @@ public class LogIn extends JFrame {
 						get_pin = passwordField.getText().toString();
 						//
 						user_form_number = resultset.getInt("form_number");
+						
 						//System.out.println(user_form_number);
 						String get_user_email = "select email from signup_1 where form_number = '"+user_form_number+"'";
 						ResultSet r1 = stat.executeQuery(get_user_email);
@@ -211,7 +212,7 @@ public class LogIn extends JFrame {
 		contentPane_1.add(lblNewLabel_1_1_1);
 		
 		JButton btnNewButton_1 = new JButton("Forgot PIN\r\n");
-		btnNewButton_1.setBackground(new Color(153, 255, 255));
+		btnNewButton_1.setBackground(new Color(0, 255, 127));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				

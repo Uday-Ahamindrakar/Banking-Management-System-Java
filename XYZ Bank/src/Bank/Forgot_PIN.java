@@ -47,7 +47,7 @@ public class Forgot_PIN extends JFrame {
 			public void run() {
 				try {
 					Forgot_PIN frame = new Forgot_PIN();
-					ImageIcon icon = new ImageIcon("C:\\Users\\udaya\\eclipse-workspace\\XYZ Bank\\Images\\bank_icon_129525.png");
+					ImageIcon icon = new ImageIcon("C:\\Users\\udaya\\eclipse-workspace\\STAR BANK\\Images\\bank_icon_129525.png");
 					frame.setIconImage(icon.getImage());
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -61,7 +61,7 @@ public class Forgot_PIN extends JFrame {
 	 * Create the frame.
 	 */
 	public Forgot_PIN() {
-		super("XYZ Bank - Forgot PIN");
+		super("STAR BANK - Forgot PIN");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Uday\\eclipse-workspace\\Images\\bank_icon_129525.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 791, 310);
@@ -140,9 +140,9 @@ public class Forgot_PIN extends JFrame {
 
 					String message = "your OTP is "+otp+".";		//"uday you did it bro keep going ";
 			        
-			        String subject = "XYZ BANK";
+			        String subject = "STAR BANK";
 			        String to = email;
-			        String from = "paperpattern1616@gmail.com";
+			        String from = "star.bank.pune@gmail.com";
 			        
 			       App.sendEmail(message,subject,to,from);
 			       
@@ -222,9 +222,9 @@ public class Forgot_PIN extends JFrame {
 						
 						String message = "Your New PIN Is "+Get_pin+".\nThank You.";		//"uday you did it bro keep going ";
 				        
-				        String subject = "XYZ BANK";
+				        String subject = "STAR BANK";
 				        String to = email;
-				        String from = "paperpattern1616@gmail.com";
+				        String from = "star.bank.pune@gmail.com";
 				        
 				       App.sendEmail(message,subject,to,from);
 				       

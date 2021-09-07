@@ -84,7 +84,7 @@ public class SignUp_1 extends JFrame {
 				try {
 					SignUp_1 frame = new SignUp_1();
 					frame.setVisible(true);
-					ImageIcon icon = new ImageIcon("C:\\Users\\udaya\\eclipse-workspace\\XYZ Bank\\Images\\bank_icon_129525.png");
+					ImageIcon icon = new ImageIcon("C:\\Users\\udaya\\eclipse-workspace\\STAR BANK\\Images\\bank_icon_129525.png");
 					frame.setIconImage(icon.getImage());
 					frame.setResizable(false);
 				} catch (Exception e) {
@@ -99,7 +99,7 @@ public class SignUp_1 extends JFrame {
 	 */
 	public SignUp_1() {
 		
-		super("XYZ Bank");
+		super("STAR BANK");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Uday\\eclipse-workspace\\Images\\bank_icon_129525.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 661, 787);

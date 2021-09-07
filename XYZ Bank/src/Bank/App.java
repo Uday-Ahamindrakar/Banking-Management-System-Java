@@ -27,7 +27,7 @@ public class App
 			@Override
 			protected PasswordAuthentication getPasswordAuthentication() {
 				
-				return new PasswordAuthentication("paperpattern1616@gmail.com","pattern16");
+				return new PasswordAuthentication("star.bank.pune@gmail.com","starbank");
 			}
 			
 		});

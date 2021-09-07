@@ -152,7 +152,7 @@ static String create_pin_no()
 			public void run() {
 				try {
 					SignUp_3 frame = new SignUp_3();
-					ImageIcon icon = new ImageIcon("C:\\Users\\udaya\\eclipse-workspace\\XYZ Bank\\Images\\bank_icon_129525.png");
+					ImageIcon icon = new ImageIcon("C:\\Users\\udaya\\eclipse-workspace\\STAR BANK\\Images\\bank_icon_129525.png");
 					frame.setIconImage(icon.getImage());
 					frame.setVisible(true);
 					frame.setResizable(false);
@@ -165,7 +165,7 @@ static String create_pin_no()
 
 	public SignUp_3() {
 		
-		super("XYZ Bank - Page 3");
+		super("STAR BANK - Page 3");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Uday\\eclipse-workspace\\Images\\bank_icon_129525.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 638, 696);
@@ -558,6 +558,8 @@ static String create_pin_no()
 						                   " withdraw VARCHAR(255), " +
 						                   " transfer VARCHAR(255), " +
 						                   " balence VARCHAR(255), " +
+						                   "transaction_date_and_time VARCHAR(255),"+
+						                   "account_no VARCHAR(255),"+
 						                   " PRIMARY KEY ( id ))"; 
 								 
 								stm.executeUpdate(sql);
@@ -570,11 +572,11 @@ static String create_pin_no()
 								
 								JOptionPane.showMessageDialog(null, "Your Account Is Created Successfully.\nAll The Details Regarding\nCard Number, PIN And Account Number\nAre Sent To This Email - "+SignUp_1.textField_4.getText().toString()+"\nThnak You.");
 								
-								String message = "Hey "+SignUp_1.full_name+", thank you for opennig your bank account in XYZ BANK.\nYour account details are provided below: \n1. Account Number =  "+Account_number+"\n2.Card Number =  "+Card_number+"\n3. PIN =  "+Pin_number+"\nThank You.  ";		//"uday you did it bro keep going ";
+								String message = "Hey "+SignUp_1.full_name+", thank you for opennig your bank account in STAR BANK.\nYour account details are provided below: \n1. Account Number =  "+Account_number+"\n2.Card Number =  "+Card_number+"\n3. PIN =  "+Pin_number+"\nThank You.  ";		//"uday you did it bro keep going ";
 						        
-						        String subject = "XYZ BANK";
+						        String subject = "STAR BANK";
 						        String to = SignUp_1.send_email;
-						        String from = "paperpattern1616@gmail.com";
+						        String from = "star.bank.pune@gmail.com";
 						        
 						       App.sendEmail(message,subject,to,from);
 

@@ -26,6 +26,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,6 +41,18 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+
+
+import javax.swing.ListSelectionModel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JScrollBar;
+import javax.swing.JEditorPane;
+import javax.swing.JComboBox;
+import javax.swing.JTextPane;
 
 public class Dashboard extends JFrame {
 
@@ -125,6 +139,18 @@ public class Dashboard extends JFrame {
 	private JTextField textField_4;
 	private JButton btnNewButton_1_3;
 	String checking_otp = null;
+	private  JTable table;
+	DefaultTableModel model;
+	private JPanel Help;
+	private JTextField txtSubject;
+	private JTextField textField_5;
+	private JTextField txtWriteYourQuery;
+	private JTextField txtFrom;
+	private JTextArea textArea;
+	private JButton btnNewButton_5;
+	private JButton btnNewButton_6;
+	private JTextField textField_6;
+	private JTextField textField_7;
 
 	/**
 	 * Launch the application.
@@ -152,13 +178,10 @@ public class Dashboard extends JFrame {
 	}
 	
 	public Dashboard() {
-		setTitle("XYZ BANK - DASHBOARD");
+		setTitle("STAR BANK - DASHBOARD");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Uday\\eclipse-workspace\\Images\\bank_icon_129525.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1340, 752);
-		
-		
-		
+		setBounds(100, 100, 1340, 752);		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBackground(Color.WHITE);
 		setJMenuBar(menuBar);
@@ -185,12 +208,14 @@ public class Dashboard extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBounds(0, 0, 240, 693);
-		panel.setBackground(new Color(175, 238, 238));
+		panel.setBackground(new Color(135, 206, 250));
 		panel.setBorder(new LineBorder(new Color(0, 0, 0)));
 		
 		JButton btnNewButton = new JButton("Deposit\r\n");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lblNewLabel_26.setVisible(false);
+				lblNewLabel_25.setVisible(false);
 				switchPane(deposit);
 			}
 		});
@@ -201,6 +226,8 @@ public class Dashboard extends JFrame {
 		btnCashWithdrawl = new JButton("Cash Withdrawl\r\n");
 		btnCashWithdrawl.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				lblNewLabel_26.setVisible(false);
+				lblNewLabel_25.setVisible(false);
 				switchPane(withdrawl);	
 			}
 		});
@@ -221,7 +248,8 @@ public class Dashboard extends JFrame {
 		btnFastCash = new JButton("Transfer Money\r\n");
 		btnFastCash.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				lblNewLabel_26.setVisible(false);
+				lblNewLabel_25.setVisible(false);
 				switchPane(fastcash);
 				btnNewButton_1_3.setVisible(true);
 			}
@@ -257,6 +285,9 @@ public class Dashboard extends JFrame {
 		persnal_info = new JButton("Personal Info.\r\n");
 		persnal_info.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				lblNewLabel_26.setVisible(false);
+				lblNewLabel_25.setVisible(false);
 				String full_name;
 				
 				String card_details = LogIn.get_card_no;
@@ -316,44 +347,62 @@ public class Dashboard extends JFrame {
 		persnal_info.setFont(new Font("Tahoma", Font.BOLD, 20));
 		persnal_info.setBackground(Color.BLACK);
 		
-		JButton btnMiniStatement = new JButton("Mini Statement");
+		JButton btnMiniStatement = new JButton("All Transaction ");
 		btnMiniStatement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				model.setRowCount(0);
+				lblNewLabel_26.setVisible(false);
+				lblNewLabel_25.setVisible(false);
 				switchPane(ministate);
+				update_table();
 			}
 		});
 		btnMiniStatement.setForeground(Color.WHITE);
 		btnMiniStatement.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnMiniStatement.setBackground(Color.BLACK);
+		
+		JButton help = new JButton("Help");
+		help.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_6.setText(LogIn.user_email);
+				switchPane(Help);
+				
+			
+			}
+		});
+		help.setForeground(Color.WHITE);
+		help.setFont(new Font("Tahoma", Font.BOLD, 20));
+		help.setBackground(Color.BLACK);
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+			gl_panel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
 						.addComponent(persnal_info, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnCashWithdrawl, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(btnCashWithdrawl, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(btnBalanceEnquiry, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(btnMiniStatement, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
-				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
 					.addComponent(btnPinChange, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(help, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGroup(gl_panel.createSequentialGroup()
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnMiniStatement, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(btnFastCash, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, gl_panel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(btnBalanceEnquiry, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
@@ -361,19 +410,21 @@ public class Dashboard extends JFrame {
 				.addGroup(gl_panel.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(persnal_info, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-					.addGap(37)
+					.addGap(18)
 					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-					.addGap(37)
+					.addGap(18)
 					.addComponent(btnCashWithdrawl, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-					.addGap(36)
+					.addGap(26)
 					.addComponent(btnBalanceEnquiry, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
 					.addComponent(btnFastCash, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-					.addGap(37)
+					.addGap(30)
 					.addComponent(btnMiniStatement, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-					.addGap(33)
+					.addGap(29)
+					.addComponent(help, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+					.addGap(27)
 					.addComponent(btnPinChange, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-					.addGap(35)
+					.addGap(27)
 					.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
 					.addGap(18))
 		);
@@ -384,37 +435,37 @@ public class Dashboard extends JFrame {
 		layeredPane.setLayout(new CardLayout(0, 0));
 		
 		deposit = new JPanel();
-		deposit.setBackground(new Color(250, 250, 210));
+		deposit.setBackground(new Color(224, 255, 255));
 		layeredPane.add(deposit, "name_76697615846300");
 		deposit.setLayout(null);
 		
-		lblNewLabel = new JLabel("Deposit\r\n");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 50));
+		lblNewLabel = new JLabel("DEPOSIT");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(302, 10, 392, 61);
+		lblNewLabel.setBounds(302, 10, 392, 41);
 		deposit.add(lblNewLabel);
 		
 		lblNewLabel_1 = new JLabel("Enter PIN -");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setBounds(206, 307, 266, 61);
+		lblNewLabel_1.setBounds(150, 302, 266, 61);
 		deposit.add(lblNewLabel_1);
 		
 		textField = new JTextField();
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		textField.setBounds(536, 222, 432, 55);
+		textField.setBounds(399, 222, 569, 55);
 		deposit.add(textField);
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Deposit Ammount -");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		lblNewLabel_1_1.setBounds(70, 222, 392, 65);
+		lblNewLabel_1_1.setBounds(10, 215, 392, 65);
 		deposit.add(lblNewLabel_1_1);
 		
 		passwordField = new JPasswordField();
 		passwordField.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		passwordField.setBounds(536, 307, 432, 55);
+		passwordField.setBounds(399, 307, 569, 55);
 		deposit.add(passwordField);
 		
 		btnNewButton_1 = new JButton("Deposit\r\n");
@@ -441,23 +492,22 @@ public class Dashboard extends JFrame {
 						Connection connection = DBconnection.DBconnect();
 						try
 						{
+							String own_account_number = null;
 							int take = 0;
 							Statement stm = connection.createStatement();
-							String string = "select form_number from signup_3 where card_number = '"+LogIn.get_card_no+"'";
+							String string = "select * from signup_3 where card_number = '"+LogIn.get_card_no+"'";
 							ResultSet validOrNot = stm.executeQuery(string);
 							if(validOrNot.next())
 							{
 								take = validOrNot.getInt("form_number");
+								own_account_number = validOrNot.getString("account_number");
 								
 							}
 							else
 							{
 								JOptionPane.showMessageDialog(null, "Error Occured");
 							}
-//							String queary = "insert into "+"customer_"+String.valueOf(take)+"(depoit) values(?)";
-//							PreparedStatement prepare = connection.prepareStatement(queary);
-//							prepare.setString(1, String.valueOf(Remaining_Ammount));	
-//							prepare.executeUpdate();
+//							
 							
 							String string_email = "select email from signup_1 where form_number = '"+String.valueOf(take)+"'";
 							ResultSet validOrNot_email = stm.executeQuery(string_email);
@@ -472,28 +522,35 @@ public class Dashboard extends JFrame {
 							validOrNot = stm.executeQuery(balence_queary);
 							if(validOrNot.next())
 							{
+								
 								String bal = validOrNot.getString("balence");
 								balence = Integer.parseInt(bal);
 								final_balence = balence + Remaining_Ammount;
-								
-								String balence_update = "insert into "+"customer_"+String.valueOf(take)+"(depoit,balence) values(?,?)";
+								String deposit_date_and_time = getDateTime();
+								String balence_update = "insert into "+"customer_"+String.valueOf(take)+"(depoit,balence,transaction_date_and_time,account_no) values(?,?,?,?)";
 								PreparedStatement balence_prepare = connection.prepareStatement(balence_update);
 								balence_prepare.setString(1, String.valueOf(Remaining_Ammount));
 								balence_prepare.setString(2, String.valueOf(final_balence));
+								balence_prepare.setString(3, deposit_date_and_time);
+								balence_prepare.setString(4, own_account_number);
 								
 								balence_prepare.executeUpdate();
 								
 								
 								String message = "Rs."+Remaining_Ammount+" is deposited in account\nYour Balence is Rs."+final_balence;
-						        String subject = "XYZ BANK";
+						        String subject = "STAR BANK";
 						        String to = LogIn.user_email;
-						        String from = "paperpattern1616@gmail.com";
+						        String from = "star.bank.pune@gmail.com";
+						        
 						        
 						       App.sendEmail(message,subject,to,from);
 						       JOptionPane.showMessageDialog(null, "Ammount Deposited Successefully");
 								textField.setText("");
 								passwordField.setText("");
 								textField.requestFocusInWindow();
+								
+								
+								//System.out.println(get_date_time);
 								
 							}
 							else
@@ -531,7 +588,7 @@ public class Dashboard extends JFrame {
 		btnNewButton_1.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnNewButton_1.setForeground(new Color(248, 248, 255));
 		btnNewButton_1.setBackground(new Color(0, 0, 0));
-		btnNewButton_1.setBounds(536, 434, 170, 48);
+		btnNewButton_1.setBounds(399, 413, 272, 52);
 		deposit.add(btnNewButton_1);
 		
 		btnNewButton_2 = new JButton("Clear");
@@ -545,56 +602,56 @@ public class Dashboard extends JFrame {
 		btnNewButton_2.setForeground(new Color(248, 248, 255));
 		btnNewButton_2.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnNewButton_2.setBackground(Color.BLACK);
-		btnNewButton_2.setBounds(798, 427, 170, 55);
+		btnNewButton_2.setBounds(696, 410, 272, 55);
 		deposit.add(btnNewButton_2);
 		
 		lblNewLabel_2 = new JLabel("Enter valid amount or enter ammount between 100 to 50,000\r\n");
 		lblNewLabel_2.setForeground(Color.RED);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_2.setBounds(536, 276, 432, 23);
+		lblNewLabel_2.setBounds(399, 275, 432, 23);
 		deposit.add(lblNewLabel_2);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(24, 86, 1055, 2);
+		separator.setBounds(24, 62, 1055, 2);
 		deposit.add(separator);
 		lblNewLabel_2.setVisible(false);
 		
 		withdrawl = new JPanel();
-		withdrawl.setBackground(new Color(250, 250, 210));
+		withdrawl.setBackground(new Color(224, 255, 255));
 		layeredPane.add(withdrawl, "name_76693740318600");
 		withdrawl.setLayout(null);
 		
-		JLabel lblWithdraw = new JLabel("Withdraw");
+		JLabel lblWithdraw = new JLabel("WITHDRAW");
 		lblWithdraw.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWithdraw.setFont(new Font("Tahoma", Font.BOLD, 50));
-		lblWithdraw.setBounds(316, 10, 392, 61);
+		lblWithdraw.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblWithdraw.setBounds(316, 10, 392, 41);
 		withdrawl.add(lblWithdraw);
 		
 		JSeparator separator_2 = new JSeparator();
-		separator_2.setBounds(24, 81, 1055, 2);
+		separator_2.setBounds(24, 62, 1055, 2);
 		withdrawl.add(separator_2);
 		
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("Tahoma", Font.PLAIN, 35));
 		textField_1.setColumns(10);
-		textField_1.setBounds(580, 223, 432, 55);
+		textField_1.setBounds(426, 223, 586, 55);
 		withdrawl.add(textField_1);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Withdraw Ammount -");
 		lblNewLabel_1_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		lblNewLabel_1_1_1.setBounds(114, 223, 392, 65);
+		lblNewLabel_1_1_1.setBounds(24, 223, 392, 65);
 		withdrawl.add(lblNewLabel_1_1_1);
 		
 		passwordField_1 = new JPasswordField();
 		passwordField_1.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		passwordField_1.setBounds(580, 308, 432, 55);
+		passwordField_1.setBounds(426, 308, 586, 55);
 		withdrawl.add(passwordField_1);
 		
 		JLabel lblNewLabel_1_2 = new JLabel("Enter PIN -");
 		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		lblNewLabel_1_2.setBounds(266, 308, 266, 61);
+		lblNewLabel_1_2.setBounds(180, 303, 266, 61);
 		withdrawl.add(lblNewLabel_1_2);
 		
 		JButton btnNewButton_1_1 = new JButton("Withdraw\r\n");
@@ -621,12 +678,14 @@ public class Dashboard extends JFrame {
 					try
 					{
 						int take = 0;
+						String withdraw_account_number = null;
 						Statement stm = connection.createStatement();
-						String string = "select form_number from signup_3 where card_number = '"+LogIn.get_card_no+"'";
+						String string = "select * from signup_3 where card_number = '"+LogIn.get_card_no+"'";
 						ResultSet validOrNot = stm.executeQuery(string);
 						if(validOrNot.next())
 						{
 							take = validOrNot.getInt("form_number");
+							withdraw_account_number = validOrNot.getString("account_number");
 							
 						}
 						else
@@ -653,18 +712,20 @@ public class Dashboard extends JFrame {
 								JOptionPane.showMessageDialog(null,String.valueOf(Remaining_Ammount)+" that much balence is not available in your account :(");
 							}
 							
-							
-							String balence_update = "insert into "+"customer_"+String.valueOf(take)+"(withdraw,balence) values(?,?)";
+							String withdraw_date_and_time = getDateTime();
+							String balence_update = "insert into "+"customer_"+String.valueOf(take)+"(withdraw,balence,transaction_date_and_time,account_no) values(?,?,?,?)";
 							PreparedStatement balence_prepare = connection.prepareStatement(balence_update);
 							balence_prepare.setString(1, String.valueOf(Remaining_Ammount));
 							balence_prepare.setString(2, String.valueOf(final_balence));
+							balence_prepare.setString(3, withdraw_date_and_time);
+							balence_prepare.setString(4, withdraw_account_number);
 							
 							balence_prepare.executeUpdate();
 							
 							String message = "Rs."+Remaining_Ammount+" is debited from your account\nYour Balence is Rs."+final_balence;
-					        String subject = "XYZ BANK";
+					        String subject = "STAR BANK";
 					        String to = LogIn.user_email;
-					        String from = "paperpattern1616@gmail.com";
+					        String from = "star.bank.pune@gmail.com";
 					        
 					       App.sendEmail(message,subject,to,from);
 					       JOptionPane.showMessageDialog(null, "Ammount Debited Successefully");
@@ -700,7 +761,7 @@ public class Dashboard extends JFrame {
 		btnNewButton_1_1.setForeground(new Color(248, 248, 255));
 		btnNewButton_1_1.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnNewButton_1_1.setBackground(Color.BLACK);
-		btnNewButton_1_1.setBounds(580, 435, 170, 48);
+		btnNewButton_1_1.setBounds(426, 435, 276, 48);
 		withdrawl.add(btnNewButton_1_1);
 		
 		JButton btnNewButton_2_1 = new JButton("Clear");
@@ -715,22 +776,22 @@ public class Dashboard extends JFrame {
 		btnNewButton_2_1.setForeground(new Color(248, 248, 255));
 		btnNewButton_2_1.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnNewButton_2_1.setBackground(Color.BLACK);
-		btnNewButton_2_1.setBounds(842, 428, 170, 55);
+		btnNewButton_2_1.setBounds(736, 428, 276, 55);
 		withdrawl.add(btnNewButton_2_1);
 		
 		balance = new JPanel();
-		balance.setBackground(new Color(250, 250, 210));
+		balance.setBackground(new Color(224, 255, 255));
 		layeredPane.add(balance, "name_76687067715100");
 		balance.setLayout(null);
 		
-		lblBalence = new JLabel("Balence");
+		lblBalence = new JLabel("BALENCE");
 		lblBalence.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBalence.setFont(new Font("Tahoma", Font.BOLD, 50));
-		lblBalence.setBounds(302, 10, 392, 61);
+		lblBalence.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblBalence.setBounds(301, 11, 392, 40);
 		balance.add(lblBalence);
 		
 		separator_3 = new JSeparator();
-		separator_3.setBounds(24, 86, 1055, 2);
+		separator_3.setBounds(24, 62, 1055, 2);
 		balance.add(separator_3);
 		
 		lblNewLabel_4 = new JLabel("Enter PIN -");
@@ -741,7 +802,7 @@ public class Dashboard extends JFrame {
 		
 		passwordField_2 = new JPasswordField();
 		passwordField_2.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		passwordField_2.setBounds(365, 252, 432, 55);
+		passwordField_2.setBounds(365, 252, 696, 55);
 		balance.add(passwordField_2);
 		
 		btnNewButton_3 = new JButton("Clear");
@@ -755,7 +816,7 @@ public class Dashboard extends JFrame {
 		btnNewButton_3.setForeground(new Color(248, 248, 255));
 		btnNewButton_3.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnNewButton_3.setBackground(Color.BLACK);
-		btnNewButton_3.setBounds(627, 362, 170, 55);
+		btnNewButton_3.setBounds(733, 364, 328, 55);
 		balance.add(btnNewButton_3);
 		
 		btnNewButton_4 = new JButton("Submit");
@@ -794,14 +855,15 @@ public class Dashboard extends JFrame {
 							//lblNewLabel_26.setText(bal);
 							lblNewLabel_26.setVisible(true);
 							lblNewLabel_25.setVisible(true);
+							passwordField_2.setText("");
 							
 							
 							
 							
 //							String message = "Rs."+Remaining_Ammount+" is deposited in account\nYour Balence is Rs."+final_balence;
-//					        String subject = "XYZ BANK";
+//					        String subject = "STAR BANK";
 //					        String to = email_id;
-//					        String from = "paperpattern1616@gmail.com";
+//					        String from = "star.bank.pune@gmail.com";
 					        
 //					       App.sendEmail(message,subject,to,from);
 //					       JOptionPane.showMessageDialog(null, "Ammount Deposited Successefully");
@@ -828,30 +890,31 @@ public class Dashboard extends JFrame {
 					//end
 					
 				}
+				
 			}
 		});
 		btnNewButton_4.setForeground(new Color(248, 248, 255));
 		btnNewButton_4.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnNewButton_4.setBackground(Color.BLACK);
-		btnNewButton_4.setBounds(365, 365, 170, 52);
+		btnNewButton_4.setBounds(365, 365, 328, 52);
 		balance.add(btnNewButton_4);
 		
-		lblNewLabel_3 = new JLabel("To check your account balence please enter below pin.");
+		lblNewLabel_3 = new JLabel("To check your account balence please enter your pin below.");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		lblNewLabel_3.setBounds(29, 140, 1050, 48);
+		lblNewLabel_3.setBounds(10, 127, 1069, 48);
 		balance.add(lblNewLabel_3);
 		
 		lblNewLabel_25 = new JLabel("Availabel Balence -");
 		lblNewLabel_25.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_25.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		lblNewLabel_25.setBounds(194, 519, 341, 61);
+		lblNewLabel_25.setBounds(50, 475, 341, 61);
 		balance.add(lblNewLabel_25);
 		lblNewLabel_25.setVisible(false);
 		
 		lblNewLabel_26 = new JLabel("");
 		lblNewLabel_26.setHorizontalAlignment(SwingConstants.LEFT);
 		lblNewLabel_26.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		lblNewLabel_26.setBounds(555, 519, 382, 61);
+		lblNewLabel_26.setBounds(401, 475, 660, 61);
 		balance.add(lblNewLabel_26);
 		lblNewLabel_26.setVisible(false);
 		contentPane.setLayout(null);
@@ -859,19 +922,20 @@ public class Dashboard extends JFrame {
 		contentPane.add(layeredPane);
 		
 		fastcash = new JPanel();
-		fastcash.setBackground(new Color(250, 250, 210));
+		fastcash.setBackground(new Color(224, 255, 255));
 		layeredPane.add(fastcash, "name_412839714986800");
 		fastcash.setLayout(null);
 		
-		JLabel lblNewLabel_27 = new JLabel("Transfer Money To Other Person");
+		JLabel lblNewLabel_27 = new JLabel("TRANSFER MONEY TO OTHER PERSON");
+		lblNewLabel_27.setBackground(new Color(224, 255, 255));
 		lblNewLabel_27.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_27.setFont(new Font("Tahoma", Font.BOLD, 28));
+		lblNewLabel_27.setFont(new Font("Tahoma", Font.BOLD, 40));
 		lblNewLabel_27.setForeground(new Color(0, 0, 0));
-		lblNewLabel_27.setBounds(97, 26, 875, 49);
+		lblNewLabel_27.setBounds(93, 0, 875, 49);
 		fastcash.add(lblNewLabel_27);
 		
 		JSeparator separator_4 = new JSeparator();
-		separator_4.setBounds(29, 88, 1035, 2);
+		separator_4.setBounds(20, 47, 1035, 2);
 		fastcash.add(separator_4);
 		
 		textField_2 = new JTextField();
@@ -924,198 +988,224 @@ public class Dashboard extends JFrame {
 		JButton btnNewButton_1_2 = new JButton("Deposit\r\n");
 		btnNewButton_1_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//btnNewButton_1_3.setVisible(false);
-				Connection connection1 = DBconnection.DBconnect();
-				String cust_acc = textField_2.getText().toString();
-				int len_acc_no = cust_acc.length();
-				boolean correct_account_number = false;
-				String other_person_email = null;
-				//String other_person_balence = null;
-				int other_person_form_number = 0;
-				if(len_acc_no == 12)
+				
+				String text1 = textField_2.getText().toString();
+				String text2 = textField_3.getText().toString();
+				String text3 = textField_4.getText().toString();
+				String pass1 = passwordField_3.getText().toString();
+				if(text1.isEmpty() == false && text2.isEmpty() == false && text3.isEmpty() == false && pass1.isEmpty() == false)
 				{
-					try 
+					//btnNewButton_1_3.setVisible(false);
+					Connection connection1 = DBconnection.DBconnect();
+					String cust_acc = textField_2.getText().toString();
+					int len_acc_no = cust_acc.length();
+					boolean correct_account_number = false;
+					String other_person_email = null;
+					//String other_person_balence = null;
+					int other_person_form_number = 0;
+					if(len_acc_no == 12)
 					{
-						Statement for_other_person = connection1.createStatement();
-						String other_person = "select form_number from signup_3 where account_number = '"+cust_acc+"'";
-						ResultSet other_result = for_other_person.executeQuery(other_person);
-						if(other_result.next())
+						try 
 						{
-							other_person_form_number = other_result.getInt("form_number");
-							
-							String get_other_person_email = "select email from signup_1 where form_number = '"+other_person_form_number+"'";
-							ResultSet valid_details = for_other_person.executeQuery(get_other_person_email);
-							if(valid_details.next())
+							Statement for_other_person = connection1.createStatement();
+							String other_person = "select form_number from signup_3 where account_number = '"+cust_acc+"'";
+							ResultSet other_result = for_other_person.executeQuery(other_person);
+							if(other_result.next())
 							{
-								correct_account_number = true;
-								other_person_email = valid_details.getString("email");
+								other_person_form_number = other_result.getInt("form_number");
+								
+								String get_other_person_email = "select email from signup_1 where form_number = '"+other_person_form_number+"'";
+								ResultSet valid_details = for_other_person.executeQuery(get_other_person_email);
+								if(valid_details.next())
+								{
+									correct_account_number = true;
+									other_person_email = valid_details.getString("email");
+								}
 							}
+						} 
+						catch (SQLException e1) 
+						{
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
-					} 
-					catch (SQLException e1) 
-					{
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
 					}
-				}
-				Pattern transfer_p = Pattern.compile("[0-9]+");//String regex = "[0-9]+";
-				
-				Matcher match_t = transfer_p.matcher(cust_acc);
-				boolean transfer_check = match_t.matches();
-				
-				String cust_Ammount = textField_3.getText().toString();
-				Matcher match_a = transfer_p.matcher(cust_Ammount);
-				boolean Ammount_check = match_a.matches();
-				int ammount_transfer = Integer.parseInt(cust_Ammount); 
-				if(len_acc_no == 12 && transfer_check == true && correct_account_number == true)
-				{
+					Pattern transfer_p = Pattern.compile("[0-9]+");//String regex = "[0-9]+";
 					
-					if(Ammount_check == true && ammount_transfer > 0 && ammount_transfer <= 50000)
+					Matcher match_t = transfer_p.matcher(cust_acc);
+					boolean transfer_check = match_t.matches();
+					
+					String cust_Ammount = textField_3.getText().toString();
+					Matcher match_a = transfer_p.matcher(cust_Ammount);
+					boolean Ammount_check = match_a.matches();
+					int ammount_transfer = Integer.parseInt(cust_Ammount); 
+					
+					if(len_acc_no == 12 && transfer_check == true && correct_account_number == true )
 					{
 						
-						try
+						if(Ammount_check == true && ammount_transfer > 0 && ammount_transfer <= 50000)
 						{
 							
-							String get_transfer_pass = passwordField_3.getText().toString();
-							Statement statement1 = connection1.createStatement();
-							String queary_to_get_pass = "select pin_number from signup_3 where pin_number = '"+get_transfer_pass+"'";
-							ResultSet check_pin = statement1.executeQuery(queary_to_get_pass);
-							if(check_pin.next())
+							try
 							{
 								
-								String cust_pin = passwordField_3.getText().toString();
-								String cust_server_pin = check_pin.getString("pin_number");
-								
-								if(cust_pin.equals(cust_server_pin))
+								String get_transfer_pass = passwordField_3.getText().toString();
+								Statement statement1 = connection1.createStatement();
+								String queary_to_get_pass = "select account_number, pin_number from signup_3 where pin_number = '"+get_transfer_pass+"'";
+								ResultSet check_pin = statement1.executeQuery(queary_to_get_pass);
+								if(check_pin.next())
 								{
 									
+									String cust_pin = passwordField_3.getText().toString();
+									String cust_server_pin = check_pin.getString("pin_number");
+									String person_who_transfered_money = null;
+									person_who_transfered_money = check_pin.getString("account_number");
+
 									
-									String to_check_otp = textField_4.getText().toString();
-									if(checking_otp.equals(to_check_otp))
+									if(cust_pin.equals(cust_server_pin))
 									{
-										Statement stm_transfer = connection1.createStatement();
 										
-										//start
-										try
+										
+										String to_check_otp = textField_4.getText().toString();
+										if(checking_otp.equals(to_check_otp))
 										{
+											Statement stm_transfer = connection1.createStatement();
 											
-											
-											
-											int trasfer_balence = 0;
-											String transfer_query = "select balence from "+"customer_"+String.valueOf(LogIn.user_form_number)+" order by id desc limit 1";//where id = '1'";
-											ResultSet balence_cust_transfer = stm_transfer.executeQuery(transfer_query);
-											
-											
-											if(balence_cust_transfer.next())
+											//start
+											try
 											{
-												String balencee = balence_cust_transfer.getString("balence");
-												trasfer_balence = Integer.parseInt(balencee);
-												int get_entered_ammount = Integer.parseInt(textField_3.getText().toString());
-												final_balence = trasfer_balence - get_entered_ammount;
 												
 												
-												String balence_update_transfer = "insert into "+"customer_"+String.valueOf(LogIn.user_form_number)+"(transfer,balence) values(?,?)";
-												PreparedStatement balence_prepare_transfer = connection1.prepareStatement(balence_update_transfer);
-												balence_prepare_transfer.setString(1, String.valueOf(get_entered_ammount));
-												balence_prepare_transfer.setString(2, String.valueOf(final_balence));
 												
-												balence_prepare_transfer.executeUpdate();
+												int trasfer_balence = 0;
+												String transfer_query = "select balence from "+"customer_"+String.valueOf(LogIn.user_form_number)+" order by id desc limit 1";//where id = '1'";
+												ResultSet balence_cust_transfer = stm_transfer.executeQuery(transfer_query);
 												
 												
-												String message = "Rs."+get_entered_ammount+" is deposited in account\nYour Balence is Rs."+final_balence;
-										        String subject = "XYZ BANK";
-										        String to = LogIn.user_email;
-										        String from = "paperpattern1616@gmail.com";
-										        App.sendEmail(message,subject,to,from);
-										        
-										       
-										       JOptionPane.showMessageDialog(null, "Ammount Deposited Successefully");
-										       
+												if(balence_cust_transfer.next())
+												{
+													String balencee = balence_cust_transfer.getString("balence");
+													trasfer_balence = Integer.parseInt(balencee);
+													
+													int get_entered_ammount = Integer.parseInt(textField_3.getText().toString());
+													final_balence = trasfer_balence - get_entered_ammount;
+													String other_person_account_number = textField_2.getText();
+													String transfer_date_and_time = getDateTime();
+													String balence_update_transfer = "insert into "+"customer_"+String.valueOf(LogIn.user_form_number)+"(transfer,balence,transaction_date_and_time,account_no) values(?,?,?,?)";
+													PreparedStatement balence_prepare_transfer = connection1.prepareStatement(balence_update_transfer);
+													balence_prepare_transfer.setString(1, String.valueOf(get_entered_ammount));
+													balence_prepare_transfer.setString(2, String.valueOf(final_balence));
+													balence_prepare_transfer.setString(3,transfer_date_and_time);
+													balence_prepare_transfer.setString(4, other_person_account_number);
+													
+													balence_prepare_transfer.executeUpdate();
+													
+													
+													String message = "Rs."+get_entered_ammount+" is debited from account\nYour Balence is Rs."+final_balence;
+											        String subject = "STAR BANK";
+											        String to = LogIn.user_email;
+											        String from = "star.bank.pune@gmail.com";
+											        App.sendEmail(message,subject,to,from);
+											        
+											       
+											       JOptionPane.showMessageDialog(null, "Ammount Debited Successefully");
+											       
+													
+												}
+												else
+												{
+													JOptionPane.showMessageDialog(null, "Error Occured");
+												}
+												
 												
 											}
-											else
+											catch (SQLException e1) 
 											{
-												JOptionPane.showMessageDialog(null, "Error Occured");
+												
+												e1.printStackTrace();
+											}	
+											
+											try
+											{
+												String query_for_other_person_balence = "select balence from "+"customer_"+other_person_form_number+" order by id desc limit 1";//where id = '1'";
+												ResultSet check_other_person_result = stm_transfer.executeQuery(query_for_other_person_balence);
+												int other_trasfer_balence = 0;
+												
+												if(check_other_person_result.next())
+												{
+													String balencee1 = check_other_person_result.getString("balence");
+													other_trasfer_balence = Integer.parseInt(balencee1);
+													int get_entered_ammount = Integer.parseInt(textField_3.getText().toString());
+													final_balence = other_trasfer_balence + get_entered_ammount;
+													String transfer_date_and_time = getDateTime();
+													
+													
+													
+													String balence_update_transfer = "insert into "+"customer_"+other_person_form_number+"(depoit,balence,transfer,account_no,transaction_date_and_time) values(?,?,?,?,?)";
+													PreparedStatement balence_prepare_transfer = connection1.prepareStatement(balence_update_transfer);
+													balence_prepare_transfer.setString(1, String.valueOf(get_entered_ammount));
+													balence_prepare_transfer.setString(2, String.valueOf(final_balence));
+													balence_prepare_transfer.setString(3, String.valueOf(get_entered_ammount));
+													balence_prepare_transfer.setString(4, person_who_transfered_money);
+													balence_prepare_transfer.setString(5,transfer_date_and_time);
+													
+													
+													balence_prepare_transfer.executeUpdate();
+													
+					
+											        String message1 = "Rs."+get_entered_ammount+" is credited in account\nYour Balence is Rs."+final_balence;
+											        String subject1 = "STAR BANK";
+											        String to1 = other_person_email;
+											        String from1 = "star.bank.pune@gmail.com";
+											        App.sendEmail(message1,subject1,to1,from1);
+											       
+											       //JOptionPane.showMessageDialog(null, "Ammount Deposited Successefully");
+											       textField_4.setText("");
+											       textField_2.setText("");
+											       textField_3.setText("");
+											       passwordField_3.setText("");
+											       textField_2.requestFocusInWindow();
+													
+												}
+												
+											}
+											catch (SQLException e1) 
+											{
+												
+												e1.printStackTrace();
 											}
 											
 											
+											
+											//end
 										}
-										catch (SQLException e1) 
-										{
-											
-											e1.printStackTrace();
-										}	
-										
-										try
-										{
-											String query_for_other_person_balence = "select balence from "+"customer_"+other_person_form_number+" order by id desc limit 1";//where id = '1'";
-											ResultSet check_other_person_result = stm_transfer.executeQuery(query_for_other_person_balence);
-											int other_trasfer_balence = 0;
-											
-											if(check_other_person_result.next())
-											{
-												String balencee1 = check_other_person_result.getString("balence");
-												other_trasfer_balence = Integer.parseInt(balencee1);
-												int get_entered_ammount = Integer.parseInt(textField_3.getText().toString());
-												final_balence = other_trasfer_balence + get_entered_ammount;
-												
-												
-												
-												String balence_update_transfer = "insert into "+"customer_"+other_person_form_number+"(depoit,balence) values(?,?)";
-												PreparedStatement balence_prepare_transfer = connection1.prepareStatement(balence_update_transfer);
-												balence_prepare_transfer.setString(1, String.valueOf(get_entered_ammount));
-												balence_prepare_transfer.setString(2, String.valueOf(final_balence));
-												
-												balence_prepare_transfer.executeUpdate();
-												
-				
-										        String message1 = "Rs."+get_entered_ammount+" is credited in account\nYour Balence is Rs."+final_balence;
-										        String subject1 = "XYZ BANK";
-										        String to1 = other_person_email;
-										        String from1 = "paperpattern1616@gmail.com";
-										        App.sendEmail(message1,subject1,to1,from1);
-										       
-										       JOptionPane.showMessageDialog(null, "Ammount Deposited Successefully");
-										       textField_4.setText("");
-										       textField_2.setText("");
-										       textField_3.setText("");
-										       passwordField_3.setText("");
-										       textField_2.requestFocusInWindow();
-												
-											}
-											
-										}
-										catch (SQLException e1) 
-										{
-											
-											e1.printStackTrace();
-										}
-										
-										
-										
-										//end
 									}
 								}
 							}
-						}
-						catch (SQLException e1) 
-						{
+							catch (SQLException e1) 
+							{
+								
+								e1.printStackTrace();
+							}
 							
-							e1.printStackTrace();
+							
+							
 						}
-						
-						
-						
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Something went wrong please enter valid details");
 					}
 				}
-				
-				
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Something went wrong please enter valid details");
+				}
 			}
 		});
 		btnNewButton_1_2.setForeground(new Color(248, 248, 255));
 		btnNewButton_1_2.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnNewButton_1_2.setBackground(Color.BLACK);
-		btnNewButton_1_2.setBounds(308, 598, 170, 48);
+		btnNewButton_1_2.setBounds(404, 594, 294, 48);
 		fastcash.add(btnNewButton_1_2);
 		
 		JButton btnNewButton_2_2 = new JButton("Clear");
@@ -1131,7 +1221,7 @@ public class Dashboard extends JFrame {
 		btnNewButton_2_2.setForeground(new Color(248, 248, 255));
 		btnNewButton_2_2.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnNewButton_2_2.setBackground(Color.BLACK);
-		btnNewButton_2_2.setBounds(606, 591, 170, 55);
+		btnNewButton_2_2.setBounds(744, 591, 294, 55);
 		fastcash.add(btnNewButton_2_2);
 		
 		btnNewButton_1_3 = new JButton("Get OTP");
@@ -1154,9 +1244,9 @@ public class Dashboard extends JFrame {
 					checking_otp = get_cust_otp;
 					String message = "your OTP is "+get_cust_otp+".";		//"uday you did it bro keep going ";
 			        
-			        String subject = "XYZ BANK";
+			        String subject = "STAR BANK";
 			        String to = LogIn.user_email;
-			        String from = "paperpattern1616@gmail.com";
+			        String from = "star.bank.pune@gmail.com";
 			        
 			       App.sendEmail(message,subject,to,from);
 				//}
@@ -1166,17 +1256,55 @@ public class Dashboard extends JFrame {
 		btnNewButton_1_3.setForeground(new Color(248, 248, 255));
 		btnNewButton_1_3.setFont(new Font("Tahoma", Font.BOLD, 25));
 		btnNewButton_1_3.setBackground(Color.BLACK);
-		btnNewButton_1_3.setBounds(58, 598, 170, 48);
+		btnNewButton_1_3.setBounds(58, 598, 294, 48);
 		fastcash.add(btnNewButton_1_3);
 		
 		ministate = new JPanel();
+		ministate.setBackground(new Color(224, 255, 255));
 		layeredPane.add(ministate, "name_414676231492900");
+		ministate.setLayout(null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(10, 54, 1069, 626);
+		ministate.add(scrollPane);
+		
+		table = new JTable();
+		table.setBackground(new Color(248, 248, 255));
+		table.setForeground(Color.BLACK);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Account Number", "Date and Time", "Transfer", "Deposit", "Withdrawal", "Balence"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class, String.class, String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
+		scrollPane.setViewportView(table);
+		
+		JLabel lblNewLabel_28 = new JLabel("TRANSACTION HISTORY");
+		lblNewLabel_28.setVerticalAlignment(SwingConstants.BOTTOM);
+		lblNewLabel_28.setFont(new Font("Tahoma", Font.BOLD, 30));
+		lblNewLabel_28.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_28.setBounds(223, 0, 642, 37);
+		ministate.add(lblNewLabel_28);
+		
+		JSeparator separator_5 = new JSeparator();
+		separator_5.setBounds(25, 41, 1035, 2);
+		ministate.add(separator_5);
 		
 		pinchange = new JPanel();
+		pinchange.setBackground(new Color(224, 255, 255));
 		layeredPane.add(pinchange, "name_413220856493700");
 		
 		panel_4 = new JPanel();
-		panel_4.setBackground(new Color(250, 250, 210));
+		panel_4.setBackground(new Color(224, 255, 255));
 		layeredPane.add(panel_4, "name_84055359441300");
 		panel_4.setLayout(null);
 		
@@ -1383,5 +1511,176 @@ public class Dashboard extends JFrame {
 		lblNewLabel_24.setFont(new Font("Tahoma", Font.BOLD, 22));
 		lblNewLabel_24.setBounds(435, 657, 33, 27);
 		panel_4.add(lblNewLabel_24);
+		
+		Help = new JPanel();
+		Help.setBackground(new Color(224, 255, 255));
+		layeredPane.add(Help, "name_171134077105600");
+		Help.setLayout(null);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(69, 296, 968, 329);
+		Help.add(scrollPane_1);
+		
+		textArea = new JTextArea();
+		textArea.setForeground(new Color(0, 0, 0));
+		textArea.setFont(new Font("Yu Gothic UI", Font.PLAIN, 20));
+		scrollPane_1.setViewportView(textArea);
+		
+		txtSubject = new JTextField();
+		txtSubject.setText("   SUBJECT :\r\n");
+		txtSubject.setForeground(Color.BLACK);
+		txtSubject.setFont(new Font("Tahoma", Font.BOLD, 20));
+		txtSubject.setEditable(false);
+		txtSubject.setColumns(10);
+		txtSubject.setBounds(69, 175, 113, 35);
+		Help.add(txtSubject);
+		
+		textField_5 = new JTextField();
+		textField_5.setForeground(new Color(0, 0, 0));
+		textField_5.setFont(new Font("Yu Gothic UI", Font.PLAIN, 20));
+		textField_5.setBounds(190, 175, 847, 35);
+		Help.add(textField_5);
+		textField_5.setColumns(10);
+		
+		txtWriteYourQuery = new JTextField();
+		txtWriteYourQuery.setText("WRITE YOUR QUERY IN THE BELOW BOX. YOU WILL GET REPLY FROM US WITHIN 3 DAYS.");
+		txtWriteYourQuery.setForeground(Color.BLACK);
+		txtWriteYourQuery.setFont(new Font("Tahoma", Font.BOLD, 20));
+		txtWriteYourQuery.setEditable(false);
+		txtWriteYourQuery.setColumns(10);
+		txtWriteYourQuery.setBounds(69, 232, 968, 35);
+		Help.add(txtWriteYourQuery);
+		
+		txtFrom = new JTextField();
+		txtFrom.setText("FROM : ");
+		txtFrom.setForeground(Color.BLACK);
+		txtFrom.setFont(new Font("Tahoma", Font.BOLD, 20));
+		txtFrom.setEditable(false);
+		txtFrom.setColumns(10);
+		txtFrom.setBounds(69, 65, 113, 35);
+		Help.add(txtFrom);
+		
+		JLabel lblGetHelp = new JLabel("GET HELP");
+		lblGetHelp.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGetHelp.setFont(new Font("Tahoma", Font.BOLD, 40));
+		lblGetHelp.setBounds(303, 0, 392, 52);
+		Help.add(lblGetHelp);
+		
+		JSeparator separator_6 = new JSeparator();
+		separator_6.setBounds(24, 52, 1055, 2);
+		Help.add(separator_6);
+		
+		btnNewButton_5 = new JButton("SEND");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String sender_email_id = textField_6.getText();
+				String sender_subject = textField_5.getText();
+				String sender_query = textArea.getText();
+				 
+		        
+		        
+		        if(sender_subject.isEmpty() == false && sender_query.isEmpty() == false)
+		        {
+		        	int input = JOptionPane.showConfirmDialog(null, "Do you want to send this email?");
+		        	if(input == 0)
+			        {
+			        	String from1 = "star.bank.pune@gmail.com";
+				        App.sendEmail(sender_query,sender_subject,sender_email_id,from1);
+				        
+				        String tobank = "star.bank.pune@gmail.com";
+				        App.sendEmail(sender_query,sender_subject,tobank,from1);
+				        
+				        textField_5.setText("");
+				        textArea.setText("");
+				        JOptionPane.showMessageDialog(null, "Your query is sent to STAR Bank you will get reply from \nus within 3-4 days.\nThank you.");
+			        }
+		        }
+		        else
+		        {
+		        	JOptionPane.showMessageDialog(null, "Enter subject and your query.");
+		        }
+				
+			}
+		});
+		btnNewButton_5.setForeground(new Color(248, 248, 255));
+		btnNewButton_5.setFont(new Font("Tahoma", Font.BOLD, 25));
+		btnNewButton_5.setBackground(Color.BLACK);
+		btnNewButton_5.setBounds(847, 636, 191, 39);
+		Help.add(btnNewButton_5);
+		
+		btnNewButton_6 = new JButton("CLEAR");
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				textField_5.setText("");
+				textArea.setText("");
+				textField_5.requestFocusInWindow();
+			}
+		});
+		btnNewButton_6.setForeground(new Color(248, 248, 255));
+		btnNewButton_6.setFont(new Font("Tahoma", Font.BOLD, 25));
+		btnNewButton_6.setBackground(Color.BLACK);
+		btnNewButton_6.setBounds(619, 636, 191, 39);
+		Help.add(btnNewButton_6);
+		
+		textField_6 = new JTextField();
+		textField_6.setForeground(Color.BLACK);
+		textField_6.setFont(new Font("Tahoma", Font.BOLD, 20));
+		textField_6.setEditable(false);
+		textField_6.setColumns(10);
+		textField_6.setBounds(190, 65, 847, 35);
+		Help.add(textField_6);
+		
+		textField_7 = new JTextField();
+		textField_7.setText("TO : STAR BANK");
+		textField_7.setForeground(Color.BLACK);
+		textField_7.setFont(new Font("Tahoma", Font.BOLD, 20));
+		textField_7.setEditable(false);
+		textField_7.setColumns(10);
+		textField_7.setBounds(69, 118, 968, 35);
+		Help.add(textField_7);
+		
+		update_table();
+	}
+	public String getDateTime()
+	{
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		  LocalDateTime current = LocalDateTime.now();  
+		 //  System.out.println(dtf.format(current)); 
+		  String date_time = dtf.format(current);
+		  return date_time;
+	}
+	public  void update_table()
+	{
+		
+		Connection con1 = DBconnection.DBconnect();
+		con1 = DBconnection.DBconnect();                 
+        try {
+            
+            PreparedStatement update_query = con1.prepareStatement("select * from "+"customer_"+String.valueOf(LogIn.user_form_number)+"");
+            ResultSet Rs = update_query.executeQuery();
+            model = (DefaultTableModel) table.getModel(); 
+            
+            while(Rs.next())
+            {
+            String transfer = Rs.getString("transfer");
+            String deposit = Rs.getString("depoit");
+            String withdrawal = Rs.getString("withdraw"); 
+            String balence = Rs.getString("balence");
+            String get_date_get_time = Rs.getString("transaction_date_and_time");
+            String get_account_number = Rs.getString("account_no");
+//            System.out.println("fine");
+            model.addRow(new Object[]{get_account_number,get_date_get_time,transfer,deposit,withdrawal,balence});                               
+             }
+            
+            table.setModel(model);   
+            
+            
+           
+        } catch (Exception e) {
+            
+              System.out.println("Failed " + e);
+            
+        }   
 	}
 }

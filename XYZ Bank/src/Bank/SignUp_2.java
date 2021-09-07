@@ -58,7 +58,7 @@ public class SignUp_2 extends JFrame {
 			public void run() {
 				try {
 					SignUp_2 frame = new SignUp_2();
-					ImageIcon icon = new ImageIcon("C:\\Users\\udaya\\eclipse-workspace\\XYZ Bank\\Images\\bank_icon_129525.png");
+					ImageIcon icon = new ImageIcon("C:\\Users\\udaya\\eclipse-workspace\\STAR BANK\\Images\\bank_icon_129525.png");
 					frame.setIconImage(icon.getImage());
 					frame.setVisible(true);
 					frame.setResizable(false);
@@ -73,7 +73,7 @@ public class SignUp_2 extends JFrame {
 	 * Create the frame.
 	 */
 	public SignUp_2() {
-		super("XYZ Bank - Page 2");
+		super("STAR BANK - Page 2");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Uday\\eclipse-workspace\\Images\\bank_icon_129525.png"));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 641, 704);
